@@ -1,40 +1,32 @@
 import React, { Component } from "react";
 import InputField from "../../../components/InputField";
-import FirebaseServ from "../firebaseConfig";
-import "firebase/auth";
+import { signInWithEmailAndPassword } from "../../firebaseConfig";
+import { Redirect } from "react-router-dom";
 
 export default class LoginForm extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       username: "",
       password: "",
       errorMessage: "",
-      isValid: false
+      isValid: false,
+      redirectToReferrer: false
     };
   }
 
   handleLogin = event => {
     event.preventDefault();
-    const auth = FirebaseServ.onSignInWithEmailAndPassword(
+    const auth = signInWithEmailAndPassword(
       this.state.username,
-      this.state.password,
-      this.handeleOnAuthStateChanged
+      this.state.password
     );
     auth
-      .then(() => this.setState({ errorMessage: "" }))
+      .then(() => this.setState({ redirectToReferrer: true }))
       .catch(err => {
         this.setState({ errorMessage: err.message });
         console.log(err);
       });
-  };
-
-  handeleOnAuthStateChanged = user => {
-    if (user) {
-      console.log("user loggedin", user);
-    } else {
-      console.log("user loggedout");
-    }
   };
 
   onInputChange = event => {
@@ -47,7 +39,16 @@ export default class LoginForm extends Component {
   };
 
   render() {
-    const { username, password, errorMessage, isValid } = this.state;
+    const {
+      username,
+      password,
+      errorMessage,
+      isValid,
+      redirectToReferrer
+    } = this.state;
+
+    let { from } = { from: { pathname: "/tasks" } };
+    if (redirectToReferrer) return <Redirect to={from} />;
 
     return (
       <form onSubmit={this.handleLogin} className="left-card-1">

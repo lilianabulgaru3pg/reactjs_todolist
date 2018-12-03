@@ -1,9 +1,11 @@
-import React, { Component, Suspense, lazy } from "react";
+import React, { Component, Suspense } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import PrivateTasksRoute from "../components/PrivateTasksRoute";
+import Tasks from "./Tasks/index";
+import LoginPage from "./Login/index";
 
-const LoginPage = lazy(() => import("./Login"));
-const Tasks = lazy(() => import("./Tasks"));
+// const LoginPage = lazy(() => import("./Login/index"));
+// const Tasks = lazy(() => import("./Tasks/index"));
 
 class App extends Component {
   render() {

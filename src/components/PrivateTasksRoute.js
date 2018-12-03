@@ -1,16 +1,18 @@
 import React from "react";
+import { isAuthenticated } from "../routes/firebaseConfig";
+import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 
 function PrivateTaskRoute({ component: Component, ...rest }) {
   return (
     <Route
       {...rest}
       render={props =>
-        fakeAuth.isAuthenticated ? (
+        isAuthenticated ? (
           <Component {...props} />
         ) : (
           <Redirect
             to={{
-              pathname: "/login",
+              pathname: "/",
               state: { from: props.location }
             }}
           />
