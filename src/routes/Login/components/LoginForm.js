@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import InputField from "../../../components/InputField";
-import Firebase from "../firebaseConfig";
+import FirebaseServ from "../firebaseConfig";
 import "firebase/auth";
 
 export default class LoginForm extends Component {
@@ -15,25 +15,27 @@ export default class LoginForm extends Component {
   }
 
   handleLogin = event => {
-    const auth = Firebase.auth();
+    event.preventDefault();
+    const auth = FirebaseServ.onSignInWithEmailAndPassword(
+      this.state.username,
+      this.state.password,
+      this.handeleOnAuthStateChanged
+    );
     auth
-      .signInWithEmailAndPassword(this.state.username, this.state.password)
       .then(() => this.setState({ errorMessage: "" }))
       .catch(err => {
         this.setState({ errorMessage: err.message });
         console.log(err);
       });
-    auth.onAuthStateChanged(user => this.handeleOnAuthStateChanged(user));
-    event.preventDefault();
   };
 
-  handeleOnAuthStateChanged(user) {
+  handeleOnAuthStateChanged = user => {
     if (user) {
       console.log("user loggedin", user);
     } else {
       console.log("user loggedout");
     }
-  }
+  };
 
   onInputChange = event => {
     console.log(event.target);
