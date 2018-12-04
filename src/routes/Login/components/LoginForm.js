@@ -10,8 +10,7 @@ export default class LoginForm extends Component {
       username: "",
       password: "",
       errorMessage: "",
-      isValid: false,
-      redirectToReferrer: false
+      isValid: false
     };
   }
 
@@ -22,7 +21,7 @@ export default class LoginForm extends Component {
       this.state.password
     );
     auth
-      .then(() => this.setState({ redirectToReferrer: true }))
+      .then(() => console.log("handleLogin"))
       .catch(err => {
         this.setState({ errorMessage: err.message });
         console.log(err);
@@ -39,16 +38,7 @@ export default class LoginForm extends Component {
   };
 
   render() {
-    const {
-      username,
-      password,
-      errorMessage,
-      isValid,
-      redirectToReferrer
-    } = this.state;
-
-    let { from } = { from: { pathname: "/tasks" } };
-    if (redirectToReferrer) return <Redirect to={from} />;
+    const { username, password, errorMessage, isValid } = this.state;
 
     return (
       <form onSubmit={this.handleLogin} className="left-card-1">

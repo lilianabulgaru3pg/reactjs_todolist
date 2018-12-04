@@ -13,7 +13,7 @@ const config = {
 export const Firebase = firebaseApp.initializeApp(config);
 
 export const signInWithEmailAndPassword = (username, pass) => {
-  // firebaseApp.auth().onAuthStateChanged(callbk);
+  console.log("signInWithEmailAndPassword");
   let authPromise = firebaseApp
     .auth()
     .signInWithEmailAndPassword(username, pass);
