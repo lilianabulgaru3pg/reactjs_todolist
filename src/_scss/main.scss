@@ -49,22 +49,22 @@ ul {
 .flex-container {
   height: 100%;
   min-height: 100%;
+  min-width: 100%;
+  width: 100%;
   display: flex;
-  // justify-content: center;
-  align-items: stretch;
+  flex-direction: row;
 }
 
 .flex-item-1,
 .flex-item-3 {
-  min-width: 8em;
   flex-basis: 30%;
-  align-self: stretch;
+  order: 0;
 }
 
 .flex-item-2,
 .flex-item-4 {
   flex-basis: 70%;
-  align-self: stretch;
+  order: 1;
 }
 
 .blue-bg {
