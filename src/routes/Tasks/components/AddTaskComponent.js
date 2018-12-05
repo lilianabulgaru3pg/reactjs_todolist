@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import InputField from "../../../components/InputField";
 import * as db from "../../../services/database";
 import { Auth } from "../../../services/firebaseConfig";
+import { TASKS_COLLECTION } from "../../../constants";
 
 class AddTaskComponent extends Component {
   constructor(props) {
@@ -18,7 +19,15 @@ class AddTaskComponent extends Component {
       name: input,
       items: []
     };
-    db.postNewTaskData(data);
+    let response = db.postNewTaskData(TASKS_COLLECTION, data);
+    response
+      .then(docRef => {
+        console.log("Document written with ID: ", docRef.id);
+        this.setState({ taskInput: "" });
+      })
+      .catch(error => {
+        console.error("Error adding document: ", error);
+      });
     event.preventDefault();
   };
 

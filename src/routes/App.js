@@ -4,6 +4,7 @@ import LoginPage from "./Login/index";
 import Firewall from "../components/Firewall";
 import PrivateTasksRoute from "../components/PrivateTasksRoute";
 import Tasks from "../routes/Tasks/index";
+import { TASKS, LOGIN } from "../constants";
 
 // const LoginPage = lazy(() => import("./Login/index"));
 // const Tasks = lazy(() => import("./Tasks/index"));
@@ -15,10 +16,10 @@ class App extends Component {
         <Suspense fallback={<div>Loading...</div>}>
           <Firewall>
             <Switch>
-              <PrivateTasksRoute path="/tasks" component={Tasks} />
+              <PrivateTasksRoute path={TASKS} component={Tasks} />
             </Switch>
           </Firewall>
-          <Route exact path="/login" component={LoginPage} />
+          <Route exact path={LOGIN} component={LoginPage} />
         </Suspense>
       </Router>
     );
