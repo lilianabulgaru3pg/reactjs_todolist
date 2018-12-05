@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import InputField from "../../../components/InputField";
-import { signInWithEmailAndPassword } from "../../firebaseConfig";
-import { Redirect } from "react-router-dom";
+import { signInWithEmailAndPassword } from "../../../services/firebaseConfig";
 
 export default class LoginForm extends Component {
   constructor(props) {
@@ -50,6 +49,7 @@ export default class LoginForm extends Component {
           // pattern="/S+@S+.S+/"
           type="email"
           className="input-border-blue"
+          required
         />
         <br />
         <InputField
@@ -60,6 +60,7 @@ export default class LoginForm extends Component {
           minLength="4"
           type="password"
           className="input-border-blue"
+          required
         />
         <br />
         <button type="submit" disabled={!isValid} value="Login">

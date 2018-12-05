@@ -6,7 +6,7 @@ export default function InputField(props) {
   return (
     <label>
       {name}:
-      <input required {...props} />
+      <input {...props} />
     </label>
   );
 }

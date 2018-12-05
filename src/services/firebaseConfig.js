@@ -1,5 +1,7 @@
 import firebaseApp from "firebase/app";
 import "firebase/auth";
+import "firebase/database";
+import "firebase/firestore";
 
 const config = {
   apiKey: "AIzaSyAJb2Ey6t1vGfGCbEZHu3YDA4JTmXJ0my8",
@@ -11,16 +13,20 @@ const config = {
 };
 
 export const Firebase = firebaseApp.initializeApp(config);
+export const Auth = firebaseApp.auth();
+export const Database = firebaseApp.database();
+export const Firestore = firebaseApp.firestore();
+// Disable deprecated features
+Firestore.settings({
+  timestampsInSnapshots: true
+});
 
 export const signInWithEmailAndPassword = (username, pass) => {
   console.log("signInWithEmailAndPassword");
-  let authPromise = firebaseApp
-    .auth()
-    .signInWithEmailAndPassword(username, pass);
+  let authPromise = Auth.signInWithEmailAndPassword(username, pass);
   return authPromise;
 };
 
-export const isAuthenticated = () =>
-  firebaseApp.auth().currentUser ? true : false;
+export const isAuthenticated = () => (Auth.currentUser ? true : false);
 
-export const signOut = () => firebaseApp.auth().signOut();
+export const signOut = () => Auth.signOut();

@@ -1,5 +1,5 @@
 import React from "react";
-import { isAuthenticated } from "../routes/firebaseConfig";
+import { isAuthenticated } from "../services/firebaseConfig";
 import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 
 function PrivateTaskRoute({ component: Component, ...rest }) {
