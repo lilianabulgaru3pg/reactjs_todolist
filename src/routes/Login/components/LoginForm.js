@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import InputField from "../../../components/InputField";
-import { signInWithEmailAndPassword } from "../../../services/firebaseConfig";
+import * as Firebase from "../../../services/firebaseConfig";
 
 export default class LoginForm extends Component {
   constructor(props) {
@@ -15,7 +15,7 @@ export default class LoginForm extends Component {
 
   handleLogin = event => {
     event.preventDefault();
-    const auth = signInWithEmailAndPassword(
+    const auth = Firebase.signInWithEmailAndPassword(
       this.state.username,
       this.state.password
     );

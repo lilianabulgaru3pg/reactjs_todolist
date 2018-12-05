@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Firebase } from "../services/firebaseConfig";
-import { withRouter, Switch } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
 class Firewall extends Component {
   constructor(props) {

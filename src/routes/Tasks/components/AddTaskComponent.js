@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import InputField from "../../../components/InputField";
-import { Auth, Firestore } from "../../../services/firebaseConfig";
+import * as db from "../../../services/database";
+import { Auth } from "../../../services/firebaseConfig";
 
 class AddTaskComponent extends Component {
   constructor(props) {
@@ -11,25 +12,15 @@ class AddTaskComponent extends Component {
   handleClick = event => {
     let input = this.state.taskInput;
     console.log(input);
-    this.postNewTaskData(input);
+    let id = Auth.currentUser.uid;
+    let data = {
+      userID: id,
+      name: input,
+      items: []
+    };
+    db.postNewTaskData(data);
     event.preventDefault();
   };
-
-  postNewTaskData(title) {
-    let id = Auth.currentUser.uid;
-    Firestore.collection("tasks")
-      .add({
-        name: title,
-        userID: id,
-        items: []
-      })
-      .then(function(docRef) {
-        console.log("Document written with ID: ", docRef.id);
-      })
-      .catch(function(error) {
-        console.error("Error adding document: ", error);
-      });
-  }
 
   handleMouseOver = event => {
     event.preventDefault();
