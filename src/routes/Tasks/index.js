@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import UserContent from "./components/UserContent";
 import TasksList from "./components/TasksList";
-import AddTaskComponent from "./components/AddTaskComponent";
+import AddNewTask from "./components/AddNewTask";
+import Header from "./components/Header";
+import ItemsList from "./components/ItemsList";
 
 export default class Tasks extends Component {
   render() {
@@ -10,12 +12,11 @@ export default class Tasks extends Component {
         <main className="flex-item-3 left-card-2 blue-bg">
           <UserContent />
           <TasksList />
-          <AddTaskComponent />
+          <AddNewTask />
         </main>
         <aside className="flex-item-4 right-card-2">
-          {/* <header>
-            <h2>To-do List</h2>
-          </header> */}
+          <Header />
+          <ItemsList />
         </aside>
       </div>
     );
