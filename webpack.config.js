@@ -31,6 +31,7 @@ module.exports = {
       chunkFilename: "[id].css"
     })
   ],
+  devtool: "inline-source-map",
   devServer: {
     historyApiFallback: true
   }
