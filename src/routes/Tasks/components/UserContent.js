@@ -18,7 +18,7 @@ class UserContent extends Component {
   }
 }
 
-UserContent.contextType = FirebaseContext;
 const UserContentWithRouter = withRouter(UserContent);
 
 export default UserContentWithRouter;
+UserContent.contextType = FirebaseContext;
