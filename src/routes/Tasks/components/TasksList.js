@@ -42,16 +42,12 @@ class TasksList extends Component {
     if (newUid !== this.state.uid && newUid) {
       if (this.unsubscribe) {
         console.log("unsubscribe");
-        this.unsubscribe(() => {
-          this.unsubscribe = this.subscribe(newUid);
-          console.log("this.unsubscribe", this.unsubscribe);
-          return false;
-        });
+        this.unsubscribe();
+        this.unsubscribe = this.subscribe(newUid);
+      } else {
+        this.unsubscribe = this.subscribe(newUid);
       }
-      this.unsubscribe = this.subscribe(newUid);
-      shouldUpdate = false;
     }
-
     return shouldUpdate;
   }
 
