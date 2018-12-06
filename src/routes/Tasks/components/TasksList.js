@@ -32,7 +32,6 @@ class TasksList extends Component {
   }
 
   shouldComponentUpdate() {
-    var shouldUpdate = false;
     var newUid = this.context.uid;
     console.log("shouldComponentUpdate", newUid, this.state.uid);
     if (newUid === this.state.uid) {
@@ -40,15 +39,11 @@ class TasksList extends Component {
       return true;
     }
     if (newUid !== this.state.uid && newUid) {
-      if (this.unsubscribe) {
-        console.log("unsubscribe");
-        this.unsubscribe();
-        this.unsubscribe = this.subscribe(newUid);
-      } else {
-        this.unsubscribe = this.subscribe(newUid);
-      }
+      this.unsubscribe ? this.unsubscribe() : false;
+      this.unsubscribe = this.subscribe(newUid);
+      return false;
     }
-    return shouldUpdate;
+    return true;
   }
 
   componentWillUnmount() {
