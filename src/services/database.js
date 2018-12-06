@@ -10,3 +10,11 @@ Firestore.settings({
 export const postNewTaskData = (collection, data) => {
   return Firestore.collection(collection).add(data);
 };
+
+export const tasksListsListener = (collection, condition, cb) => {
+  Firestore.collection(collection)
+    .where(...condition)
+    .onSnapshot(docs => {
+      cb(docs);
+    });
+};

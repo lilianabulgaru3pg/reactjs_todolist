@@ -11,10 +11,11 @@ class AddNewTask extends Component {
   }
 
   handleClick = event => {
+    var inputText = this.state.taskInput;
     let id = Auth.currentUser.uid;
     let data = {
       userID: id,
-      name: this.state.taskInput,
+      name: inputText,
       items: []
     };
     let response = db.postNewTaskData(TASKS_COLLECTION, data);
@@ -42,6 +43,7 @@ class AddNewTask extends Component {
         <InputField
           className="add-task-input show-input"
           onChange={this.handleInputChange}
+          value={this.state.taskInput}
         />
         <button
           className="button-task button-style-1"
