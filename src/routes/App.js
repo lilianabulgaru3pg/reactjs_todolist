@@ -15,9 +15,7 @@ class App extends Component {
       <Router>
         <Suspense fallback={<div>Loading...</div>}>
           <Firewall>
-            <Switch>
-              <PrivateTasksRoute path={TASKS} component={Tasks} />
-            </Switch>
+            <Tasks />
           </Firewall>
           <Route exact path={LOGIN} component={LoginPage} />
         </Suspense>

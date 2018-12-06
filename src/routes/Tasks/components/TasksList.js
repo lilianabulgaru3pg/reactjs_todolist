@@ -1,48 +1,55 @@
 import React, { Component } from "react";
-import { Firestore, tasksListsListener } from "../../../services/database";
+import { tasksListsListener } from "../../../services/database";
 import { TASKS_COLLECTION } from "../../../constants";
 import { FirebaseContext } from "../../../services/firebaseConfig";
 import uuid from "uuid";
+import { Link, Route } from "react-router-dom";
+import ItemsList from "./ItemsList";
 
 class TasksList extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { tasks: [], uid: "" };
-    this.unsubscribe = null;
-  }
+  state = { tasks: [] };
 
   componentDidMount() {
-    this.unsubscribe = this.subscribe(this.context.uid);
+    const { uid } = this.context;
+
+    if (uid) {
+      this.unsubscribe = this.subscribe(uid);
+    }
+  }
+
+  componentDidUpdate() {
+    const { uid } = this.context;
+
+    if (!this.unsubscribe && uid) {
+      this.unsubscribe = this.subscribe(uid);
+    }
   }
 
   subscribe(newUid) {
-    console.log("subscribe", newUid);
     return tasksListsListener(
       TASKS_COLLECTION,
       ["userID", "==", newUid],
       docs => {
         var newTasks = [];
+
         docs.forEach(doc => {
-          newTasks.push(doc.data());
+          newTasks.push({ ...doc.data(), id: doc.id });
         });
-        console.log("Current data: ", newTasks);
-        this.setState((tasks, uid) => ({ tasks: newTasks, uid: newUid }));
+
+        this.setState(() => ({ tasks: newTasks }));
       }
     );
   }
 
+  unsubscribe = null;
+
   shouldComponentUpdate() {
-    var newUid = this.context.uid;
-    console.log("shouldComponentUpdate", newUid, this.state.uid);
-    if (newUid === this.state.uid) {
-      console.log("Did Update", newUid);
-      return true;
-    }
-    if (newUid !== this.state.uid && newUid) {
-      this.unsubscribe ? this.unsubscribe() : false;
-      this.unsubscribe = this.subscribe(newUid);
+    var { uid } = this.context;
+
+    if (!uid) {
       return false;
     }
+
     return true;
   }
 
@@ -53,9 +60,9 @@ class TasksList extends Component {
   render() {
     console.log("render");
     let tasksList = this.state.tasks;
-    const listItems = tasksList.map(item => (
-      <li key={uuid()}>
-        <a href="">{item.name}</a>
+    const listItems = tasksList.map(({ id, name }) => (
+      <li key={id}>
+        <Link to={"/tasks/" + id}>{name}</Link>
       </li>
     ));
 

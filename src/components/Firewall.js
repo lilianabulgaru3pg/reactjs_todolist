@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Firebase, FirebaseContext } from "../services/firebaseConfig";
 import { withRouter } from "react-router-dom";
+import { TASKS } from "../constants";
 
 class Firewall extends Component {
   constructor(props) {
@@ -18,7 +19,7 @@ class Firewall extends Component {
     } else {
       this.setState({ user: user.email, uid: user.uid });
       this.props.history.replace({
-        pathname: "/tasks",
+        pathname: TASKS,
         state: {}
       });
     }
