@@ -12,7 +12,7 @@ export const postNewTaskData = (collection, data) => {
 };
 
 export const tasksListsListener = (collection, condition, cb) => {
-  Firestore.collection(collection)
+  return Firestore.collection(collection)
     .where(...condition)
     .onSnapshot(docs => {
       cb(docs);

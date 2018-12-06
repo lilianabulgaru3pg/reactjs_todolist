@@ -11,14 +11,15 @@ class Firewall extends Component {
 
   handleAuthStateChange = user => {
     console.log("AuthStateChanged", Firebase.auth().currentUser);
-    this.setState({ user: user.email, uid: user.uid });
+    console.log("user.email", user);
     if (!user) {
+      this.setState({ user: "", uid: "" });
       this.props.history.push({ pathname: "/login", state: {} });
     } else {
-      console.log("user.email", user.email);
+      this.setState({ user: user.email, uid: user.uid });
       this.props.history.replace({
         pathname: "/tasks",
-        state: { user: user.email }
+        state: {}
       });
     }
   };

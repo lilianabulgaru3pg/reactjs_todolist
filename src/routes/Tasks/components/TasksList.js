@@ -7,24 +7,60 @@ import uuid from "uuid";
 class TasksList extends Component {
   constructor(props) {
     super(props);
-    this.state = { tasks: [] };
+    this.state = { tasks: [], uid: "" };
+    this.unsubscribe = null;
   }
 
   componentDidMount() {
-    tasksListsListener(
+    this.unsubscribe = this.subscribe(this.context.uid);
+  }
+
+  subscribe(newUid) {
+    console.log("subscribe", newUid);
+    return tasksListsListener(
       TASKS_COLLECTION,
-      ["userID", "==", "1jY2WkbRKDQ2ENCamB4LEVBYbtw1"],
+      ["userID", "==", newUid],
       docs => {
         var newTasks = [];
         docs.forEach(doc => {
           newTasks.push(doc.data());
         });
         console.log("Current data: ", newTasks);
-        this.setState(tasks => ({ tasks: newTasks }));
+        this.setState((tasks, uid) => ({ tasks: newTasks, uid: newUid }));
       }
     );
   }
+
+  shouldComponentUpdate() {
+    var shouldUpdate = false;
+    var newUid = this.context.uid;
+    console.log("shouldComponentUpdate", newUid, this.state.uid);
+    if (newUid === this.state.uid) {
+      console.log("Did Update", newUid);
+      return true;
+    }
+    if (newUid !== this.state.uid && newUid) {
+      if (this.unsubscribe) {
+        console.log("unsubscribe");
+        this.unsubscribe(() => {
+          this.unsubscribe = this.subscribe(newUid);
+          console.log("this.unsubscribe", this.unsubscribe);
+          return false;
+        });
+      }
+      this.unsubscribe = this.subscribe(newUid);
+      shouldUpdate = false;
+    }
+
+    return shouldUpdate;
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe ? this.unsubscribe() : false;
+  }
+
   render() {
+    console.log("render");
     let tasksList = this.state.tasks;
     const listItems = tasksList.map(item => (
       <li key={uuid()}>

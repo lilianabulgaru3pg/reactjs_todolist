@@ -7,14 +7,12 @@ class UserContent extends Component {
     signOut();
   };
   render() {
-    // let username = this.props.location.state.user;
-    console.log("context", this, this.context);
     return (
       <button
         className="button-style-1 button-loggout"
         onClick={this.handleClick}
       >
-        {this.context.user}
+        {this.context.user ? this.context.user : ""}
       </button>
     );
   }
