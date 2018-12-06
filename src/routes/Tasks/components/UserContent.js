@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { signOut } from "../../../services/firebaseConfig";
+import { signOut, FirebaseContext } from "../../../services/firebaseConfig";
 import { withRouter } from "react-router-dom";
 
 class UserContent extends Component {
@@ -7,19 +7,20 @@ class UserContent extends Component {
     signOut();
   };
   render() {
-    let username = this.props.location.state.user;
-
+    // let username = this.props.location.state.user;
+    console.log("context", this, this.context);
     return (
       <button
         className="button-style-1 button-loggout"
         onClick={this.handleClick}
       >
-        {username}
+        {this.context.user}
       </button>
     );
   }
 }
 
+UserContent.contextType = FirebaseContext;
 const UserContentWithRouter = withRouter(UserContent);
 
 export default UserContentWithRouter;

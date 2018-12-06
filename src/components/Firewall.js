@@ -1,15 +1,17 @@
 import React, { Component } from "react";
-import { Firebase } from "../services/firebaseConfig";
+import { Firebase, FirebaseContext } from "../services/firebaseConfig";
 import { withRouter } from "react-router-dom";
 
 class Firewall extends Component {
   constructor(props) {
     super(props);
     Firebase.auth().onAuthStateChanged(this.handleAuthStateChange);
+    this.state = { user: "", uid: "" };
   }
 
   handleAuthStateChange = user => {
     console.log("AuthStateChanged", Firebase.auth().currentUser);
+    this.setState({ user: user.email, uid: user.uid });
     if (!user) {
       this.props.history.push({ pathname: "/login", state: {} });
     } else {
@@ -22,7 +24,11 @@ class Firewall extends Component {
   };
 
   render() {
-    return this.props.children;
+    return (
+      <FirebaseContext.Provider value={this.state}>
+        {this.props.children}
+      </FirebaseContext.Provider>
+    );
   }
 }
 

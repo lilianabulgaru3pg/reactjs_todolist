@@ -9,15 +9,15 @@ export default class Tasks extends Component {
   render() {
     return (
       <div className="flex-container page-2 ">
-        <main className="flex-item-3 left-card-2 blue-bg">
+        <aside className="flex-item-3 left-card-2 blue-bg">
           <UserContent />
           <TasksList />
           <AddNewTask />
-        </main>
-        <aside className="flex-item-4 right-card-2">
+        </aside>
+        <main className="flex-item-4 right-card-2">
           <Header />
           <ItemsList />
-        </aside>
+        </main>
       </div>
     );
   }
