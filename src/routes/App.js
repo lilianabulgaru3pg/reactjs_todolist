@@ -1,13 +1,9 @@
 import React, { Component, Suspense } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import LoginPage from "./Login/index";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import Firewall from "../components/Firewall";
-import PrivateTasksRoute from "../components/PrivateTasksRoute";
-import Tasks from "../routes/Tasks/index";
-import { TASKS, LOGIN } from "../constants";
-
-// const LoginPage = lazy(() => import("./Login/index"));
-// const Tasks = lazy(() => import("./Tasks/index"));
+import { LOGIN } from "../constants";
+import LoginPage from "./Login/index";
+import Tasks from "./Tasks/index";
 
 class App extends Component {
   render() {
