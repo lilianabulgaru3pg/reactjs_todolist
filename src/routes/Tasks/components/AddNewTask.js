@@ -20,10 +20,7 @@ class AddNewTask extends Component {
     };
     let response = db.postNewTaskData(TASKS_COLLECTION, data);
     response
-      .then(docRef => {
-        console.log("Document written with ID: ", docRef.id);
-        this.setState({ taskInput: "" });
-      })
+      .then(() => this.setState({ taskInput: "" }))
       .catch(error => console.error("Error adding document: ", error));
     event.preventDefault();
   };
