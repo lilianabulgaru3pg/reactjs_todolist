@@ -1,44 +1,39 @@
 import React, { Component } from "react";
-import { tasksListsListener } from "../../../services/database";
-import { TASKS_COLLECTION } from "../../../constants";
+import { addListener } from "../../../services/database";
+import { TASKS_COLLECTION, TASKS } from "../../../constants";
 import { FirebaseContext } from "../../../services/firebaseConfig";
-import uuid from "uuid";
-import { Link, Route } from "react-router-dom";
-import ItemsList from "./ItemsList";
+import { Link, withRouter } from "react-router-dom";
 
 class TasksList extends Component {
-  state = { tasks: [] };
+  state = { tasks: [], firstTaskID: "" };
 
   componentDidMount() {
     const { uid } = this.context;
-
-    if (uid) {
-      this.unsubscribe = this.subscribe(uid);
-    }
+    if (uid) this.unsubscribe = this.subscribe(uid);
   }
 
   componentDidUpdate() {
     const { uid } = this.context;
+    if (!this.unsubscribe && uid) this.unsubscribe = this.subscribe(uid);
 
-    if (!this.unsubscribe && uid) {
-      this.unsubscribe = this.subscribe(uid);
+    let taskID = this.props.history.location.pathname.split("/")[2];
+    if (!taskID && this.state.firstTaskID) {
+      this.props.history.push({
+        pathname: `${TASKS}/${this.state.firstTaskID}`,
+        state: {}
+      });
     }
   }
 
   subscribe(newUid) {
-    return tasksListsListener(
-      TASKS_COLLECTION,
-      ["userID", "==", newUid],
-      docs => {
-        var newTasks = [];
-
-        docs.forEach(doc => {
-          newTasks.push({ ...doc.data(), id: doc.id });
-        });
-
-        this.setState(() => ({ tasks: newTasks }));
-      }
-    );
+    return addListener(TASKS_COLLECTION, ["userID", "==", newUid], docs => {
+      if (docs.empty) return;
+      var newTasks = [];
+      docs.forEach(doc => {
+        newTasks.push({ ...doc.data(), id: doc.id });
+      });
+      this.setState(() => ({ tasks: newTasks, firstTaskID: newTasks[0].id }));
+    });
   }
 
   unsubscribe = null;
@@ -54,15 +49,16 @@ class TasksList extends Component {
   }
 
   componentWillUnmount() {
-    this.unsubscribe ? this.unsubscribe() : false;
+    if (this.unsubscribe) this.unsubscribe();
   }
 
   render() {
-    console.log("render");
     let tasksList = this.state.tasks;
     const listItems = tasksList.map(({ id, name }) => (
       <li key={id}>
-        <Link to={"/tasks/" + id}>{name}</Link>
+        <Link from="task" to={"/tasks/" + id}>
+          {name}
+        </Link>
       </li>
     ));
 
@@ -73,6 +69,7 @@ class TasksList extends Component {
     );
   }
 }
+const TasksListWithRouter = withRouter(TasksList);
 
+export default TasksListWithRouter;
 TasksList.contextType = FirebaseContext;
-export default TasksList;
