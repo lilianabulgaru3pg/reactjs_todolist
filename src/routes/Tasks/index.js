@@ -18,7 +18,7 @@ export default class Tasks extends Component {
         </aside>
         <main className="flex-item-4 right-card-2">
           <Header />
-          <Route path="/tasks/:id" component={ItemsList} />
+          <Route path="/tasks/:taskId" component={ItemsList} />
           <AddItem />
         </main>
       </div>
