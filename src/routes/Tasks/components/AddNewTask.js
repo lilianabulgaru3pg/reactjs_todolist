@@ -18,7 +18,7 @@ class AddNewTask extends Component {
       name: inputText,
       items: []
     };
-    let response = db.postNewTaskData(TASKS_COLLECTION, data);
+    let response = db.postData(TASKS_COLLECTION, data);
     response
       .then(() => this.setState({ taskInput: "" }))
       .catch(error => console.error("Error adding document: ", error));
