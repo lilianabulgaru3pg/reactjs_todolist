@@ -1,4 +1,4 @@
-import firebaseApp from "firebase/app";
+import firebase from "firebase/app";
 import "firebase/auth";
 import React from "react";
 
@@ -11,8 +11,8 @@ const config = {
   messagingSenderId: "816959137147"
 };
 
-export const Firebase = firebaseApp.initializeApp(config);
-export const Auth = firebaseApp.auth();
+export const Firebase = firebase.initializeApp(config);
+export const Auth = Firebase.auth();
 
 export const signInWithEmailAndPassword = (username, pass) => {
   console.log("signInWithEmailAndPassword");
