@@ -11,13 +11,6 @@ export const postData = (collection, data) => {
   return Firestore.collection(collection).add(data);
 };
 
-export const addDataToDocument = (collection, doc, fieldStr, data) => {
-  let ref = Firestore.collection(collection).doc(doc);
-  return ref.update({
-    [fieldStr]: Firebase.firebase_.firestore.FieldValue.arrayUnion({ data })
-  });
-};
-
 export const getData = (collection, doc) => {
   return Firestore.collection(collection)
     .doc(doc)
@@ -39,4 +32,10 @@ export const addListener = (collection, condition, cb) => {
     .onSnapshot(docs => {
       cb(docs);
     });
+};
+
+export const putData = (collection, doc, data) => {
+  return Firestore.collection(collection)
+    .doc(doc)
+    .update(data);
 };
