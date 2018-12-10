@@ -4,6 +4,8 @@ import TasksList from "./components/TasksList";
 import AddNewTask from "./components/AddNewTask";
 import Header from "./components/Header";
 import ItemsList from "./components/ItemsList";
+import AddItem from "./components/AddItem";
+import { Route } from "react-router-dom";
 
 export default class Tasks extends Component {
   render() {
@@ -16,7 +18,8 @@ export default class Tasks extends Component {
         </aside>
         <main className="flex-item-4 right-card-2">
           <Header />
-          <ItemsList />
+          <Route path="/tasks/:id" component={ItemsList} />
+          <AddItem />
         </main>
       </div>
     );
