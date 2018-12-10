@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
-import { addListener } from "../../../services/database";
+import { addListener, putData } from "../../../services/database";
 import { ITEMS_COLLECTION } from "../../../constants";
 
 class ItemsList extends Component {
@@ -10,7 +9,6 @@ class ItemsList extends Component {
 
   subscribe(taskID) {
     return addListener(ITEMS_COLLECTION, ["taskID", "==", taskID], docs => {
-      console.log(docs);
       if (docs.empty) {
         this.setState(() => ({ items: "" }));
         return;
@@ -24,17 +22,28 @@ class ItemsList extends Component {
   }
 
   componentDidMount() {
-    this.taskID = this.props.history.location.pathname.split("/")[2];
-    if (this.taskID) this.unsubscribe = this.subscribe(this.taskID);
+    const {
+      match: {
+        params: { taskId }
+      }
+    } = this.props;
+    if (taskId) this.unsubscribe = this.subscribe(taskId);
   }
 
-  componentDidUpdate() {
-    let taskID = this.props.history.location.pathname.split("/")[2];
-    console.log("taskID", this.taskID);
-    console.log(taskID);
-    if (this.taskID != taskID || !this.unsubscribe) {
-      this.taskID = taskID;
-      this.unsubscribe = this.subscribe(this.taskID);
+  componentDidUpdate(prevProps) {
+    const {
+      match: {
+        params: { taskId: prevId }
+      }
+    } = prevProps;
+    const {
+      match: {
+        params: { taskId }
+      }
+    } = this.props;
+
+    if ((taskId != prevId || !this.unsubscribe) && taskId) {
+      this.unsubscribe = this.subscribe(taskId);
     }
   }
 
@@ -42,18 +51,20 @@ class ItemsList extends Component {
     if (this.unsubscribe) this.unsubscribe();
   }
 
-  handleChange = () => {};
+  handleChange = itemId => () => {
+    const { id, state } = this.state.items.find(({ id }) => id === itemId);
+    putData(ITEMS_COLLECTION, id, { completed: !state });
+  };
 
   createItemsList = () => {
     let itemsList = this.state.items;
     if (itemsList.length == 0) return false;
-    var listItems = itemsList.map(({ id, name, completed }, index) => (
+    var listItems = itemsList.map(({ id, name, completed }) => (
       <li key={id} className="checkbox">
         <input
           type="checkbox"
-          id={index}
           checked={completed}
-          onChange={this.handleChange}
+          onChange={this.handleChange(id)}
         />
         <label>{name}</label>
       </li>
@@ -77,6 +88,4 @@ class ItemsList extends Component {
   }
 }
 
-const ItemsListWithRouter = withRouter(ItemsList);
-
-export default ItemsListWithRouter;
+export default ItemsList;
