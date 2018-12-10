@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import classNames from "classnames";
 import { postData } from "../../../services/database";
 import { ITEMS_COLLECTION } from "../../../constants";
-import { FirebaseContext } from "../../../services/firebaseConfig";
 import { withRouter } from "react-router-dom";
 
 class AddItem extends Component {
@@ -65,4 +64,3 @@ class AddItem extends Component {
 
 const AddItemWithRouter = withRouter(AddItem);
 export default AddItemWithRouter;
-AddItem.contextType = FirebaseContext;
