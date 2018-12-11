@@ -2,9 +2,25 @@ import React, { Component } from "react";
 import { addListener, putData } from "../../../services/database";
 import { ITEMS_COLLECTION } from "../../../constants";
 
+const ListItem = props => {
+  return (
+    <li className="checkbox">
+      <input
+        type="checkbox"
+        checked={props.completed}
+        onChange={props.handleChange}
+      />
+      <label>{props.name}</label>
+    </li>
+  );
+};
+
 class ItemsList extends Component {
-  state = { items: [] };
-  taskID = "";
+  constructor(props) {
+    super(props);
+    this.state = { items: [], searchState: false };
+  }
+
   unsubscribe = null;
 
   subscribe(taskID) {
@@ -32,6 +48,14 @@ class ItemsList extends Component {
 
   componentDidUpdate(prevProps) {
     const {
+      location: { search: prevSearch }
+    } = prevProps;
+    const {
+      location: { search }
+    } = this.props;
+    if (prevSearch != search) this.setState({ searchState: true });
+
+    const {
       match: {
         params: { taskId: prevId }
       }
@@ -52,23 +76,36 @@ class ItemsList extends Component {
   }
 
   handleChange = itemId => () => {
-    const { id, state } = this.state.items.find(({ id }) => id === itemId);
-    putData(ITEMS_COLLECTION, id, { completed: !state });
+    const { id, completed } = this.state.items.find(({ id }) => id === itemId);
+    putData(ITEMS_COLLECTION, id, { completed: !completed });
   };
 
   createItemsList = () => {
     let itemsList = this.state.items;
     if (itemsList.length == 0) return false;
-    var listItems = itemsList.map(({ id, name, completed }) => (
-      <li key={id} className="checkbox">
-        <input
-          type="checkbox"
+
+    let { searchState } = this.state;
+    const {
+      location: { search }
+    } = this.props;
+    let searchText = search.replace("?", "").split("=")[1];
+
+    var filtredList = itemsList;
+    if (searchState) {
+      filtredList = itemsList.filter(({ name }) => name.includes(searchText));
+    }
+
+    let listItems = filtredList.map(({ id, name, completed }) => {
+      return (
+        <ListItem
+          key={id}
           checked={completed}
           onChange={this.handleChange(id)}
+          name={name}
         />
-        <label>{name}</label>
-      </li>
-    ));
+      );
+    });
+
     return listItems;
   };
 
