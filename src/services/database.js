@@ -17,13 +17,10 @@ export const getData = (collection, doc) => {
     .get();
 };
 
-export const addDocumentListener = (collection, doc, cb) => {
-  console.log("aici");
-  var path = `${doc}.items`;
+export const queryData = (collection, condition) => {
   return Firestore.collection(collection)
-    .where(doc, "==", true)
-    .where(path, "==", true)
-    .onSnapshot(cb);
+    .where(...condition)
+    .get();
 };
 
 export const addListener = (collection, condition, cb) => {

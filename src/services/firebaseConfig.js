@@ -15,7 +15,6 @@ export const Firebase = firebase.initializeApp(config);
 export const Auth = Firebase.auth();
 
 export const signInWithEmailAndPassword = (username, pass) => {
-  console.log("signInWithEmailAndPassword");
   let authPromise = Auth.signInWithEmailAndPassword(username, pass);
   return authPromise;
 };

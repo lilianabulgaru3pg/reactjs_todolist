@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import SearchItem from "./SearchItem";
 
 class Header extends Component {
-  state = {};
   render() {
     return (
       <header>
