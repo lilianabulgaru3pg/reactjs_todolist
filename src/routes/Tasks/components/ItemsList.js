@@ -18,7 +18,7 @@ const ListItem = props => {
 class ItemsList extends Component {
   constructor(props) {
     super(props);
-    this.state = { items: [], searchState: false };
+    this.state = { items: [], searchText: "" };
   }
 
   unsubscribe = null;
@@ -53,7 +53,9 @@ class ItemsList extends Component {
     const {
       location: { search }
     } = this.props;
-    if (prevSearch != search) this.setState({ searchState: true });
+
+    var searchText = search.replace("?", "").split("=")[1];
+    if (prevSearch != search) this.setState({ searchText: searchText });
 
     const {
       match: {
@@ -84,16 +86,10 @@ class ItemsList extends Component {
     let itemsList = this.state.items;
     if (itemsList.length == 0) return false;
 
-    let { searchState } = this.state;
-    const {
-      location: { search }
-    } = this.props;
-    let searchText = search.replace("?", "").split("=")[1];
-
+    let { searchText } = this.state;
     var filtredList = itemsList;
-    if (searchState) {
+    if (searchText)
       filtredList = itemsList.filter(({ name }) => name.includes(searchText));
-    }
 
     let listItems = filtredList.map(({ id, name, completed }) => {
       return (
