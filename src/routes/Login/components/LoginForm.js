@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import InputField from "../../../components/InputField";
 import * as Firebase from "../../../services/firebaseConfig";
 
 export default class LoginForm extends Component {
@@ -42,7 +41,7 @@ export default class LoginForm extends Component {
     return (
       <form onSubmit={this.handleLogin} className="left-card-1">
         <h3>Login</h3>
-        <InputField
+        <input
           name="username"
           value={username}
           onChange={this.onInputChange}
@@ -52,7 +51,7 @@ export default class LoginForm extends Component {
           required
         />
         <br />
-        <InputField
+        <input
           name="password"
           value={password}
           onChange={this.onInputChange}

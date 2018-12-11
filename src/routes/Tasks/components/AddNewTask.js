@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import InputField from "../../../components/InputField";
 import * as db from "../../../services/database";
 import { Auth } from "../../../services/firebaseConfig";
 import { TASKS_COLLECTION } from "../../../constants";
@@ -37,7 +36,7 @@ class AddNewTask extends Component {
   render() {
     return (
       <React.Fragment>
-        <InputField
+        <input
           className="add-task-input show-input"
           onChange={this.handleInputChange}
           value={this.state.taskInput}
