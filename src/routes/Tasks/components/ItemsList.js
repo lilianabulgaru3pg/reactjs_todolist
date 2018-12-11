@@ -96,7 +96,7 @@ class ItemsList extends Component {
         <ListItem
           key={id}
           checked={completed}
-          onChange={this.handleChange(id)}
+          handleChange={this.handleChange(id)}
           name={name}
         />
       );
