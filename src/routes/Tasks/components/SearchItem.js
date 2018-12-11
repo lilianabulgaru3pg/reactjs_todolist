@@ -9,10 +9,7 @@ class SearchItem extends Component {
 
   handleInputChange = ev => {
     this.setState({ searchText: ev.target.value });
-  };
-
-  handleClick = () => {
-    this.props.history.push({ search: `?item=${this.state.searchText}` });
+    this.props.history.push({ search: `?item=${ev.target.value}` });
   };
 
   render() {
@@ -22,13 +19,8 @@ class SearchItem extends Component {
           className="search-input"
           onChange={this.handleInputChange}
           value={this.state.searchText}
+          placeholder="Search"
         />
-        <button
-          className="button-search  button-style-1"
-          onClick={this.handleClick}
-        >
-          Search
-        </button>
       </React.Fragment>
     );
   }
