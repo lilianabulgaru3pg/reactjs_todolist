@@ -1,16 +1,13 @@
-import React, { Component } from "react";
-import * as Firebase from "../../../services/firebaseConfig";
+import React, { Component } from 'react';
+import * as Firebase from '../../../services/firebaseConfig';
 
 export default class LoginForm extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      username: "",
-      password: "",
-      errorMessage: "",
-      isValid: false
-    };
-  }
+  state = {
+    username: '',
+    password: '',
+    errorMessage: '',
+    isValid: false
+  };
 
   handleLogin = event => {
     event.preventDefault();
@@ -18,12 +15,9 @@ export default class LoginForm extends Component {
       this.state.username,
       this.state.password
     );
-    auth
-      .then(() => console.log("handleLogin"))
-      .catch(err => {
-        this.setState({ errorMessage: err.message });
-        console.log(err);
-      });
+    auth.catch(err => {
+      this.setState({ errorMessage: err.message });
+    });
   };
 
   onInputChange = event => {
@@ -32,7 +26,6 @@ export default class LoginForm extends Component {
       [event.target.name]: event.target.value,
       isValid: event.target.form.checkValidity()
     });
-    console.log(event.target.form.checkValidity());
   };
 
   render() {
@@ -47,7 +40,7 @@ export default class LoginForm extends Component {
           onChange={this.onInputChange}
           // pattern="/S+@S+.S+/"
           type="email"
-          className="input-border-blue"
+          className="input-border-blue input-username"
           required
         />
         <br />
@@ -58,7 +51,7 @@ export default class LoginForm extends Component {
           // pattern=".{4,}"
           minLength="4"
           type="password"
-          className="input-border-blue"
+          className="input-border-blue input-password"
           required
         />
         <br />

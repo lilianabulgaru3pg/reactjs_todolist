@@ -1,26 +1,26 @@
-import firebase from "firebase/app";
-import "firebase/auth";
-import React from "react";
+import firebase from 'firebase/app';
+import 'firebase/auth';
+import React from 'react';
 
 const config = {
-  apiKey: "AIzaSyAJb2Ey6t1vGfGCbEZHu3YDA4JTmXJ0my8",
-  authDomain: "todolistserverapp.firebaseapp.com",
-  databaseURL: "https://todolistserverapp.firebaseio.com",
-  projectId: "todolistserverapp",
-  storageBucket: "todolistserverapp.appspot.com",
-  messagingSenderId: "816959137147"
+  apiKey: 'AIzaSyAJb2Ey6t1vGfGCbEZHu3YDA4JTmXJ0my8',
+  authDomain: 'todolistserverapp.firebaseapp.com',
+  databaseURL: 'https://todolistserverapp.firebaseio.com',
+  projectId: 'todolistserverapp',
+  storageBucket: 'todolistserverapp.appspot.com',
+  messagingSenderId: '816959137147'
 };
 
 export const Firebase = firebase.initializeApp(config);
 export const Auth = Firebase.auth();
 
 export const signInWithEmailAndPassword = (username, pass) => {
-  let authPromise = Auth.signInWithEmailAndPassword(username, pass);
+  const authPromise = Auth.signInWithEmailAndPassword(username, pass);
   return authPromise;
 };
 
-export const isAuthenticated = () => (Auth.currentUser ? true : false);
+export const isAuthenticated = () => !!Auth.currentUser;
 
 export const signOut = () => Auth.signOut();
 
-export const FirebaseContext = React.createContext("");
+export const FirebaseContext = React.createContext('');

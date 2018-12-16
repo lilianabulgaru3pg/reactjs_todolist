@@ -1,40 +1,27 @@
-import React, { Component } from "react";
-import { addListener, putData } from "../../../services/database";
-import { ITEMS_COLLECTION } from "../../../constants";
+import React, { Component } from 'react';
+import { addListener, putData } from '../../../services/database';
+import { ITEMS_COLLECTION } from '../../../constants';
 
-const ListItem = props => {
-  return (
-    <li className="checkbox">
+const ListItem = props => (
+  <li className="checkbox">
+    <label htmlFor="item-checkbox">
       <input
+        id="item-checkbox"
         type="checkbox"
         checked={props.completed}
         onChange={props.handleChange}
       />
-      <label>{props.name}</label>
-    </li>
-  );
-};
+      {props.name}
+    </label>
+  </li>
+);
 
 class ItemsList extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { items: [], searchText: "" };
-  }
-
   unsubscribe = null;
 
-  subscribe(taskID) {
-    return addListener(ITEMS_COLLECTION, ["taskID", "==", taskID], docs => {
-      if (docs.empty) {
-        this.setState(() => ({ items: "" }));
-        return;
-      }
-      var newItems = [];
-      docs.forEach(doc => {
-        newItems.push({ ...doc.data(), id: doc.id });
-      });
-      this.setState(() => ({ items: newItems }));
-    });
+  constructor(props) {
+    super(props);
+    this.state = { items: [], searchText: '' };
   }
 
   componentDidMount() {
@@ -54,8 +41,7 @@ class ItemsList extends Component {
       location: { search }
     } = this.props;
 
-    var searchText = search.replace("?", "").split("=")[1];
-    if (prevSearch != search) this.setState({ searchText: searchText });
+    this.updateSearchState(search, prevSearch);
 
     const {
       match: {
@@ -68,7 +54,7 @@ class ItemsList extends Component {
       }
     } = this.props;
 
-    if ((taskId != prevId || !this.unsubscribe) && taskId) {
+    if ((taskId !== prevId || !this.unsubscribe) && taskId) {
       this.unsubscribe = this.subscribe(taskId);
     }
   }
@@ -83,38 +69,55 @@ class ItemsList extends Component {
   };
 
   createItemsList = () => {
-    let itemsList = this.state.items;
-    if (itemsList.length == 0) return false;
+    const itemsList = this.state.items;
+    if (itemsList.length === 0) return false;
 
-    let { searchText } = this.state;
-    var filtredList = itemsList;
+    const { searchText } = this.state;
+    let filtredList = itemsList;
     if (searchText)
       filtredList = itemsList.filter(({ name }) => name.includes(searchText));
 
-    let listItems = filtredList.map(({ id, name, completed }) => {
-      return (
-        <ListItem
-          key={id}
-          checked={completed}
-          handleChange={this.handleChange(id)}
-          name={name}
-        />
-      );
-    });
+    const listItems = filtredList.map(({ id, name, completed }) => (
+      <ListItem
+        key={id}
+        checked={completed}
+        handleChange={this.handleChange(id)}
+        name={name}
+      />
+    ));
 
     return listItems;
   };
 
+  updateSearchState(search, prevSearch) {
+    const searchText = search.replace('?', '').split('=')[1];
+    if (prevSearch !== search) this.setState({ searchText });
+  }
+
+  subscribe(taskID) {
+    return addListener(ITEMS_COLLECTION, ['taskID', '==', taskID], docs => {
+      if (docs.empty) {
+        this.setState(() => ({ items: '' }));
+        return;
+      }
+      const newItems = [];
+      docs.forEach(doc => {
+        newItems.push({ ...doc.data(), id: doc.id });
+      });
+      this.setState(() => ({ items: newItems }));
+    });
+  }
+
   render() {
-    var listItems = this.createItemsList();
+    const listItems = this.createItemsList();
     return (
       <section className="items-section">
         {listItems ? (
           <ul className="items-list">{listItems}</ul>
         ) : (
-          <label>
+          <h4>
             Your list is empty, add items to the list by pressing the + button.
-          </label>
+          </h4>
         )}
       </section>
     );

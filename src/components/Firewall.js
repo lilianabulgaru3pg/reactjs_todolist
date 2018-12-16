@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import { Firebase, FirebaseContext } from "../services/firebaseConfig";
-import { withRouter } from "react-router-dom";
-import { TASKS, LOGIN } from "../constants";
+import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
+import { Firebase, FirebaseContext } from '../services/firebaseConfig';
+import { TASKS, LOGIN } from '../constants';
 
 class Firewall extends Component {
   constructor(props) {
@@ -9,14 +9,18 @@ class Firewall extends Component {
     this.unsubscribe = Firebase.auth().onAuthStateChanged(
       this.handleAuthStateChange
     );
-    this.state = { user: "", uid: "" };
+    this.state = { user: '', uid: '' };
+  }
+
+  componentWillUnmount() {
+    if (this.unsubscribe) this.unsubscribe();
   }
 
   handleAuthStateChange = user => {
-    console.log("user.email", user);
-    var history = this.props.history;
+    console.log('user.email', user);
+    const { history } = this.props;
     if (!user) {
-      this.setState({ user: "", uid: "" });
+      this.setState({ user: '', uid: '' });
       history.push({ pathname: LOGIN, state: {} });
     } else {
       this.setState({ user: user.email, uid: user.uid });
@@ -27,14 +31,11 @@ class Firewall extends Component {
     }
   };
 
-  componentWillUnmount() {
-    if (this.unsubscribe) this.unsubscribe();
-  }
-
   render() {
+    const { uid, user } = this.state;
     return (
       <FirebaseContext.Provider value={this.state}>
-        {this.state.user && this.props.children}
+        {uid && user && this.props.children}
       </FirebaseContext.Provider>
     );
   }

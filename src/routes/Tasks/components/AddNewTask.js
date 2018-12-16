@@ -1,26 +1,24 @@
-import React, { Component } from "react";
-import * as db from "../../../services/database";
-import { Auth } from "../../../services/firebaseConfig";
-import { TASKS_COLLECTION } from "../../../constants";
+import React, { Component } from 'react';
+import * as db from '../../../services/database';
+import { Auth } from '../../../services/firebaseConfig';
+import { TASKS_COLLECTION } from '../../../constants';
 
 class AddNewTask extends Component {
   constructor(props) {
     super(props);
-    this.state = { taskInput: "" };
+    this.state = { taskInput: '' };
   }
 
   handleClick = event => {
-    var inputText = this.state.taskInput;
-    let id = Auth.currentUser.uid;
-    let data = {
+    const inputText = this.state.taskInput;
+    const id = Auth.currentUser.uid;
+    const data = {
       userID: id,
       name: inputText,
       items: []
     };
-    let response = db.postData(TASKS_COLLECTION, data);
-    response
-      .then(() => this.setState({ taskInput: "" }))
-      .catch(error => console.error("Error adding document: ", error));
+    const response = db.postData(TASKS_COLLECTION, data);
+    response.then(() => this.setState({ taskInput: '' }));
     event.preventDefault();
   };
 
@@ -42,9 +40,11 @@ class AddNewTask extends Component {
           value={this.state.taskInput}
         />
         <button
+          type="button"
           className="button-task button-style-1"
           onClick={this.handleClick}
           onMouseOver={this.handleMouseOver}
+          onFocus={this.handleMouseOver}
         >
           Add Task
         </button>

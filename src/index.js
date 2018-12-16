@@ -1,7 +1,6 @@
-import style from "./_scss/main.scss";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './_scss/main.scss';
+import App from './routes/App';
 
-import React from "react";
-import ReactDOM from "react-dom";
-import App from "./routes/App";
-
-ReactDOM.render(<App />, document.getElementById("root"));
+ReactDOM.render(<App />, document.getElementById('root'));

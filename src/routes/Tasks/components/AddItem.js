@@ -1,11 +1,11 @@
-import React, { Component } from "react";
-import classNames from "classnames";
-import { postData } from "../../../services/database";
-import { ITEMS_COLLECTION } from "../../../constants";
-import { withRouter } from "react-router-dom";
+import React, { Component } from 'react';
+import classNames from 'classnames';
+import { withRouter } from 'react-router-dom';
+import { postData } from '../../../services/database';
+import { ITEMS_COLLECTION } from '../../../constants';
 
 class AddItem extends Component {
-  state = { showDialog: false, inputValue: "" };
+  state = { showDialog: false, inputValue: '' };
 
   handleInputChange = ev => {
     this.setState({ inputValue: ev.target.value });
@@ -13,14 +13,14 @@ class AddItem extends Component {
 
   handleOnKeyPress = ev => {
     this.setState({ showDialog: true });
-    if (ev.key === "Enter") {
+    if (ev.key === 'Enter') {
       this.setState({ showDialog: false });
-      let taskID = this.props.history.location.pathname.split("/")[2];
-      let itemName = this.state.inputValue;
+      const taskID = this.props.history.location.pathname.split('/')[2];
+      const itemName = this.state.inputValue;
       postData(ITEMS_COLLECTION, {
         name: itemName,
         completed: false,
-        taskID: taskID
+        taskID
       });
     }
   };
@@ -31,21 +31,21 @@ class AddItem extends Component {
   };
 
   render() {
-    var { showDialog } = this.state;
-    var inputClass = classNames({
-      "add-item-input": true,
-      "hide-add-item-input": !showDialog,
-      "show-add-item-input": showDialog
+    const { showDialog } = this.state;
+    const inputClass = classNames({
+      'add-item-input': true,
+      'hide-add-item-input': !showDialog,
+      'show-add-item-input': showDialog
     });
 
-    var dialogCls = classNames({
-      "add-item-dialog": true,
-      "hide-dialog": !showDialog,
-      "show-dialog": showDialog
+    const dialogCls = classNames({
+      'add-item-dialog': true,
+      'hide-dialog': !showDialog,
+      'show-dialog': showDialog
     });
 
     return (
-      <button className="button-add" onClick={this.showInputView}>
+      <button type="button" className="button-add" onClick={this.showInputView}>
         +
         {showDialog && (
           <div className={dialogCls}>
