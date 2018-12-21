@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App should render correctly 1`] = `
+<BrowserRouter>
+  <React.Suspense
+    fallback={
+      <div>
+        Loading...
+      </div>
+    }
+  >
+    <withRouter(Firewall)>
+      <Tasks />
+    </withRouter(Firewall)>
+    <Route
+      component={[Function]}
+      exact={true}
+      path="/login"
+    />
+  </React.Suspense>
+</BrowserRouter>
+`;
