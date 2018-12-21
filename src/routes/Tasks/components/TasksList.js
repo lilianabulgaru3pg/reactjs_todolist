@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { addListener } from '../../../services/database';
 import { TASKS_COLLECTION, TASKS } from '../../../constants';
-import { FirebaseContext } from '../../../services/firebaseConfig';
+import { FirebaseContext } from '../../../services/firebase';
 
-class TasksList extends Component {
+export class TasksList extends Component {
   state = { tasks: [], firstTaskID: '' };
 
   unsubscribe = null;
