@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
-import { signOut, FirebaseContext } from '../../../services/firebaseConfig';
+import { signOut, FirebaseContext } from '../../../services/firebase';
 
 class UserContent extends Component {
   handleClick = () => {
@@ -20,7 +19,6 @@ class UserContent extends Component {
   }
 }
 
-const UserContentWithRouter = withRouter(UserContent);
-
-export default UserContentWithRouter;
 UserContent.contextType = FirebaseContext;
+
+export default UserContent;
