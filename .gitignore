@@ -76,6 +76,6 @@ typings/
 .fusebox/
 
 # production 
-/dist
+dist/
 
 package-lock.json
