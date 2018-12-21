@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import Firewall from '../components/Firewall';
+import RoutedFirewall from '../components/Firewall';
 import { LOGIN } from '../constants';
 import LoginPage from './Login/index';
 import Tasks from './Tasks/index';
@@ -8,9 +8,9 @@ import Tasks from './Tasks/index';
 const App = () => (
   <Router>
     <Suspense fallback={<div>Loading...</div>}>
-      <Firewall>
+      <RoutedFirewall>
         <Tasks />
-      </Firewall>
+      </RoutedFirewall>
       <Route exact path={LOGIN} component={LoginPage} />
     </Suspense>
   </Router>
