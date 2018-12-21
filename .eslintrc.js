@@ -6,7 +6,7 @@ module.exports = {
     jest: true
   },
   "parser": "babel-eslint",
-  "extends": ["airbnb", "plugin:jest/recommended","plugin:prettier/recommended", "prettier/flowtype", "prettier/react", "prettier/standard"],
+  "extends": ["airbnb", "jest-enzyme", "plugin:jest/recommended","plugin:prettier/recommended", "prettier/flowtype", "prettier/react", "prettier/standard"],
   "plugins": ["prettier", "jest"],
   rules: {
     "strict": 0,
