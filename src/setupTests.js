@@ -1,4 +1,6 @@
-import Adapter from "enzyme-adapter-react-16";
-import { configure } from "enzyme";
+const Enzyme = require('enzyme');
+const Adapter = require('enzyme-adapter-react-16');
 
-configure({ adapter: new Adapter() });
+require('jest-enzyme');
+
+Enzyme.configure({ adapter: new Adapter() });
