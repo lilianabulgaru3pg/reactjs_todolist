@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import * as Firebase from '../../../services/firebaseConfig';
+import { signInWithEmailAndPassword } from '../../../services/firebase';
 
 export default class LoginForm extends Component {
   state = {
@@ -11,7 +11,7 @@ export default class LoginForm extends Component {
 
   handleLogin = event => {
     event.preventDefault();
-    const auth = Firebase.signInWithEmailAndPassword(
+    const auth = signInWithEmailAndPassword(
       this.state.username,
       this.state.password
     );
