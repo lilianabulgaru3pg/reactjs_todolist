@@ -1,15 +1,19 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import { Firebase, FirebaseContext } from '../services/firebaseConfig';
+import { Firebase } from '../services/firebaseConfig';
+import { FirebaseContext } from '../services/firebase';
 import { TASKS, LOGIN } from '../constants';
 
-class Firewall extends Component {
+export class Firewall extends Component {
   constructor(props) {
     super(props);
+    this.state = { user: '', uid: '' };
+  }
+
+  componentDidMount() {
     this.unsubscribe = Firebase.auth().onAuthStateChanged(
       this.handleAuthStateChange
     );
-    this.state = { user: '', uid: '' };
   }
 
   componentWillUnmount() {
