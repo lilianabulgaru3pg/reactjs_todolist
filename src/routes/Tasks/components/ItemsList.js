@@ -1,20 +1,7 @@
 import React, { Component } from 'react';
 import { addListener, putData } from '../../../services/database';
 import { ITEMS_COLLECTION } from '../../../constants';
-
-const ListItem = props => (
-  <li className="checkbox">
-    <label htmlFor="item-checkbox">
-      <input
-        id="item-checkbox"
-        type="checkbox"
-        checked={props.completed}
-        onChange={props.handleChange}
-      />
-      {props.name}
-    </label>
-  </li>
-);
+import ListItem from './ListItem';
 
 class ItemsList extends Component {
   unsubscribe = null;
@@ -64,6 +51,7 @@ class ItemsList extends Component {
   }
 
   handleChange = itemId => () => {
+    // eslint-disable-next-line no-shadow
     const { id, completed } = this.state.items.find(({ id }) => id === itemId);
     putData(ITEMS_COLLECTION, id, { completed: !completed });
   };
