@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 import UserContent from './components/UserContent';
-import TasksList from './components/TasksList';
+import RoutedTasksList from './components/TasksList';
 import AddNewTask from './components/AddNewTask';
 import Header from './components/Header';
 import ItemsList from './components/ItemsList';
@@ -11,7 +11,7 @@ const Tasks = () => (
   <div className="flex-container page-2 ">
     <aside className="flex-item-3 left-card-2 blue-bg">
       <UserContent />
-      <TasksList />
+      <RoutedTasksList />
       <AddNewTask />
     </aside>
     <main className="flex-item-4 right-card-2">
