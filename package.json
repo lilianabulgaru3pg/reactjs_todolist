@@ -49,21 +49,23 @@
     "webpack-dev-server": "^3.1.10"
   },
   "dependencies": {
-    "react": "^16.6.3",
-    "react-dom": "^16.6.3",
-    "react-test-renderer": "^16.6.3",
-    "firebase": "^5.7.0",
-    "react-redux": "^5.1.1",
-    "react-router-dom": "^4.3.1",
-    "redux": "^4.0.1",
+    "classnames": "^2.2.6",
     "enzyme": "^3.8.0",
     "enzyme-adapter-react-16": "^1.7.1",
-    "classnames": "^2.2.6",
+    "eslint-config-jest-enzyme": "^7.0.1",
+    "firebase": "^5.7.0",
+    "hyperform": "^0.9.21",
+    "jest-enzyme": "^7.0.1",
+    "react": "^16.6.3",
+    "react-dom": "^16.6.3",
+    "react-redux": "^5.1.1",
+    "react-router-dom": "^4.3.1",
+    "react-test-renderer": "^16.6.3",
+    "redux": "^4.0.1",
     "style-loader": "^0.23.1",
     "styled-components": "^4.1.2"
   },
   "jest": {
-    "setupTestFrameworkScriptFile": "<rootDir>src/setupTests.js",
-    "testEnvironment": "enzyme"
+    "setupTestFrameworkScriptFile": "./src/setupTests.js"
   }
 }
