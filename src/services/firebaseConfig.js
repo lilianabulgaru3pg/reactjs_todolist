@@ -1,6 +1,5 @@
 import firebase from 'firebase/app';
 import 'firebase/auth';
-import React from 'react';
 
 const config = {
   apiKey: 'AIzaSyAJb2Ey6t1vGfGCbEZHu3YDA4JTmXJ0my8',
@@ -13,14 +12,3 @@ const config = {
 
 export const Firebase = firebase.initializeApp(config);
 export const Auth = Firebase.auth();
-
-export const signInWithEmailAndPassword = (username, pass) => {
-  const authPromise = Auth.signInWithEmailAndPassword(username, pass);
-  return authPromise;
-};
-
-export const isAuthenticated = () => !!Auth.currentUser;
-
-export const signOut = () => Auth.signOut();
-
-export const FirebaseContext = React.createContext('');
