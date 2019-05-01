@@ -49,21 +49,22 @@ ul {
 .flex-container {
   height: 100%;
   min-height: 100%;
+  min-width: 100%;
+  width: 100%;
   display: flex;
-  justify-content: center;
-  align-items: stretch;
+  flex-direction: row;
 }
 
 .flex-item-1,
 .flex-item-3 {
   flex-basis: 30%;
-  align-self: stretch;
+  order: 0;
 }
 
 .flex-item-2,
 .flex-item-4 {
   flex-basis: 70%;
-  align-self: stretch;
+  order: 1;
 }
 
 .blue-bg {
@@ -95,6 +96,10 @@ ul {
 
 .left-card-2 ul li {
   color: white;
+}
+
+.button-loggout {
+  width: 100%;
 }
 
 .add-task-input,
@@ -195,13 +200,6 @@ header h2 {
   font-size: 1.2em;
 }
 
-.button-search {
-  width: 15%;
-  padding: 0;
-  font-size: 1em;
-}
-
-.button-search,
 .search-input {
   display: inline-block;
   margin: 0;
@@ -210,8 +208,8 @@ header h2 {
 }
 
 .search-input {
-  width: 80%;
-  margin: 0 1% 0 1%;
+  width: 96%;
+  margin: 0 2% 0 2%;
 }
 
 .right-card-2 {

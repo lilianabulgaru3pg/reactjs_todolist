@@ -1,39 +1,24 @@
-import React, { Component } from "react";
-import InputField from "../../../components/InputField";
-import Firebase from "../firebaseConfig";
-import "firebase/auth";
+import React, { Component } from 'react';
+import { signInWithEmailAndPassword } from '../../../services/firebase';
 
 export default class LoginForm extends Component {
-  constructor() {
-    super();
-    this.state = {
-      username: "",
-      password: "",
-      errorMessage: "",
-      isValid: false
-    };
-  }
-
-  handleLogin = event => {
-    const auth = Firebase.auth();
-    auth
-      .signInWithEmailAndPassword(this.state.username, this.state.password)
-      .then(() => this.setState({ errorMessage: "" }))
-      .catch(err => {
-        this.setState({ errorMessage: err.message });
-        console.log(err);
-      });
-    auth.onAuthStateChanged(user => this.handeleOnAuthStateChanged(user));
-    event.preventDefault();
+  state = {
+    username: '',
+    password: '',
+    errorMessage: '',
+    isValid: false
   };
 
-  handeleOnAuthStateChanged(user) {
-    if (user) {
-      console.log("user loggedin", user);
-    } else {
-      console.log("user loggedout");
-    }
-  }
+  handleLogin = event => {
+    event.preventDefault();
+    const auth = signInWithEmailAndPassword(
+      this.state.username,
+      this.state.password
+    );
+    auth.catch(err => {
+      this.setState({ errorMessage: err.message });
+    });
+  };
 
   onInputChange = event => {
     console.log(event.target);
@@ -41,7 +26,6 @@ export default class LoginForm extends Component {
       [event.target.name]: event.target.value,
       isValid: event.target.form.checkValidity()
     });
-    console.log(event.target.form.checkValidity());
   };
 
   render() {
@@ -50,23 +34,25 @@ export default class LoginForm extends Component {
     return (
       <form onSubmit={this.handleLogin} className="left-card-1">
         <h3>Login</h3>
-        <InputField
+        <input
           name="username"
           value={username}
           onChange={this.onInputChange}
           // pattern="/S+@S+.S+/"
           type="email"
-          className="input-border-blue"
+          className="input-border-blue input-username"
+          required
         />
         <br />
-        <InputField
+        <input
           name="password"
           value={password}
           onChange={this.onInputChange}
           // pattern=".{4,}"
           minLength="4"
           type="password"
-          className="input-border-blue"
+          className="input-border-blue input-password"
+          required
         />
         <br />
         <button type="submit" disabled={!isValid} value="Login">
