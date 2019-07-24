@@ -1,7 +1,7 @@
 {
   "name": "webpack-react-todolist",
   "version": "1.0.0",
-  "description": "",
+  "description": "React To-do List with Firebase Server Example",
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --mode development --open --inline --hot",
@@ -9,9 +9,10 @@
     "test": "jest --coverage --watchAll",
     "lint": "eslint ./src"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": ["promise",
+    "async", "javascript", "webpack4", "es6", "react", "firebase"],
+  "author": "Bulgaru Liliana",
+  "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.1.6",
     "@babel/plugin-proposal-class-properties": "^7.1.0",
