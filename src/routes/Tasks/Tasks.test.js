@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import Tasks from './index';
 import UserContent from './components/UserContent';
 import AddNewTask from './components/AddNewTask';
-import { TasksList } from './components/TasksList';
+import RoutedTasksList from './components/TasksList';
 import Header from './components/Header';
 import AddItem from './components/AddItem';
 
@@ -15,7 +15,7 @@ describe('Tasks', () => {
   });
 
   it('should render the TasksList', () => {
-    expect(wrapper.containsMatchingElement(<TasksList />)).toEqual(true);
+    expect(wrapper.containsMatchingElement(<RoutedTasksList />)).toEqual(true);
   });
 
   it('should render the AddNewTask', () => {
